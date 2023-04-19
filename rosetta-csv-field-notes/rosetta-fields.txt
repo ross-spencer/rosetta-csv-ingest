@@ -2,7 +2,7 @@
 Title (DC)
 Title (DC)
 Access Rights Policy ID (IE)
-Archway Unique ID (Object Identifier)
+ArchwayUniqueID (Object Identifier - IE)
 Identifier - Archway Unique Id (DC)
 Archway Series Number
 Provenance (dcterms)
@@ -24,7 +24,7 @@ File Creation Date (General File Characteristics)
 "name": "SIP Title",
 "name": "Title (DC)",
 "name": "Access Rights Policy ID (IE)",
-"name": "Archway Unique ID (Object Identifier)",
+"name": "ArchwayUniqueID (Object Identifier - IE)",
 "name": "Identifier - Archway Unique Id (DC)",
 "name": "Archway Series Number",
 "name": "Provenance (dcterms)",
