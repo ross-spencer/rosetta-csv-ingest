@@ -39,7 +39,7 @@
             }
         },
         {
-            "name": "Archway Unique ID (Object Identifier)",
+            "name": "ArchwayUniqueID (Object Identifier - IE)",
             "description": "Record number in Archive New Zealand's catalogue.",
             "type": "http://www.w3.org/2001/XMLSchema#string",
             "constraints": {
