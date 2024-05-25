@@ -1,8 +1,11 @@
-#!/usr/local/bin/python
-# -*- coding: utf-8 -*-
+"""Rosetta CSV Generator.
+
+Creates a generic Rosetta ingest CSV from a DROID formatted export.
+"""
 
 import argparse
-import sys
+import logging
+import time
 
 try:
     from RosettaCSVGenerator import RosettaCSVGenerator
@@ -13,44 +16,40 @@ except ModuleNotFoundError:
         from rosetta_csv.RosettaCSVGenerator import RosettaCSVGenerator
 
 
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(
+    format="%(asctime)-15s %(levelname)s :: %(filename)s:%(lineno)s:%(funcName)s() :: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level="INFO",
+)
+
+# Default to UTC time.
+logging.Formatter.converter = time.gmtime
+
+
 def rosettacsvgeneration(droidcsv, rosettaschema, configfile):
     csvgen = RosettaCSVGenerator(droidcsv, rosettaschema, configfile)
     csvgen.export2rosettacsv()
 
 
 def main():
-    # 	Usage: 	--csv [droid report]
-    # 	Handle command line arguments for the script
+    """Primary entry point for this script."""
     parser = argparse.ArgumentParser(
-        description="Generate Archway Import Sheet and Rosetta Ingest CSV from DROID CSV Reports."
-    )
-
-    # TODO: Consider optional and mandatory elements... behaviour might change depending on output...
-    # other options droid csv and rosetta schema
-    # NOTE: class on its own might be used to create a blank import csv with just static options
-    parser.add_argument(
-        "--csv", help="Single DROID CSV to read.", default=False, required=True
+        description="generate Rosetta Ingest CSV from DROID CSV Reports."
     )
     parser.add_argument(
-        "--ros", help="Rosetta CSV validation schema.", default=False, required=True
+        "--csv", help="single DROID CSV to read.", default=False, required=True
     )
     parser.add_argument(
-        "--cfg", help="Config file for field mapping.", default=False, required=True
+        "--ros", help="rosetta CSV validation schema.", default=False, required=True
     )
-
-    if len(sys.argv) == 1:
-        parser.print_help()
-        sys.exit(1)
-
-    # 	Parse arguments into namespace object to reference later in the script
+    parser.add_argument(
+        "--cfg", help="config file for field mapping.", default=False, required=True
+    )
     global args
     args = parser.parse_args()
-
-    if args.csv and args.ros:
-        rosettacsvgeneration(args.csv, args.ros, args.cfg)
-    else:
-        parser.print_help()
-        sys.exit(1)
+    rosettacsvgeneration(args.csv, args.ros, args.cfg)
 
 
 if __name__ == "__main__":
