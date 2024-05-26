@@ -4,7 +4,10 @@ import configparser as ConfigParser
 
 
 class RosettaCSVSections:
-    sections = []
+    """Rosetta CSV sections object."""
+
+    sections = None
+    config = None
 
     def __init__(self, configfile):
         self.config = ConfigParser.RawConfigParser()
@@ -16,7 +19,7 @@ class RosettaCSVSections:
         if self.config.has_option("rosetta csv fields", "CSVSECTIONS"):
             sections = self.config.get("rosetta csv fields", "CSVSECTIONS").split(",")
 
-        self.sect = []
+        self.sections = []
         for section in sections:
             if self.config.has_option("rosetta csv fields", section):
                 sectiondict = {}

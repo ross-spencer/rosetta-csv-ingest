@@ -20,9 +20,6 @@ except ModuleNotFoundError:
 
 
 class RosettaCSVGenerator:
-    includezips = False
-    singleIE = False
-
     # flags for singleIE config
     ieOutput = False
     representationOutput = False
@@ -32,6 +29,14 @@ class RosettaCSVGenerator:
 
     # zip name we removed
     zipname = ""
+
+    # Main init options...
+    config = None
+    singleIE = None
+    droidcsv = None
+    rosettaschema = None
+    rosettasections = None
+    includezips = None
 
     def __init__(self, droidcsv=False, rosettaschema=False, configfile=False):
         self.config = ConfigParser.RawConfigParser()
@@ -120,8 +125,8 @@ class RosettaCSVGenerator:
             '"Object Type","SIP Title"', '"Object Type","Title (DC)"'
         )
 
-        # finally output CSV
-        sys.stdout.write(csvrows)
+        # finally return the CSV.
+        return csvrows
 
     # TODO: Passed each time we go through the code, improve on this: DO ONCE!
     def __update_section_status__(self, section):
@@ -273,7 +278,7 @@ class RosettaCSVGenerator:
                 # len IE + Len REP?
                 csvindex = number_of_empty_fields
 
-        self.csvstringoutput(fields)
+        return self.csvstringoutput(fields)
 
     def readExportCSV(self):
         if self.exportsheet is not False:
@@ -308,6 +313,7 @@ class RosettaCSVGenerator:
             return droidlist
 
     def export2rosettacsv(self):
-        if self.droidcsv is not False:
-            self.droidlist = self.readDROIDCSV()
-            self.createrosettacsv()
+        if not self.droidcsv:
+            return ""
+        self.droidlist = self.readDROIDCSV()
+        return self.createrosettacsv()

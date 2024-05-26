@@ -30,7 +30,7 @@ logging.Formatter.converter = time.gmtime
 
 def rosettacsvgeneration(droidcsv, rosettaschema, configfile):
     csvgen = RosettaCSVGenerator(droidcsv, rosettaschema, configfile)
-    csvgen.export2rosettacsv()
+    print(csvgen.export2rosettacsv())
 
 
 def main():
