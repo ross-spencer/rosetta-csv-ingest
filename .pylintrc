@@ -23,6 +23,8 @@ ignore-patterns=
     ^(.+).html,
     ^(.+).htm,
     ^(.+).svg,
+    ^(.+).cfg,
+    ^(.+).txt,
     ^\.,
 
 ignore-paths=
@@ -33,3 +35,4 @@ ignore-paths=
 [MESSAGES CONTROL]
 
 disable =
+    R0903,      # too-few public methods.

@@ -249,7 +249,7 @@
         },
         {
             "name": "Digital Original",
-            "description": "Specifiying whether this is a digital original or not (Born Digital vs. Digitised).",
+            "description": "Specifying whether this is a digital original or not (Born Digital vs. Digitised).",
             "type": "http://www.w3.org/2001/XMLSchema#string",
             "constraints": {
                 "required": false,

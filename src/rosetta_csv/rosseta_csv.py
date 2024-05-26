@@ -8,12 +8,12 @@ import logging
 import time
 
 try:
-    from RosettaCSVGenerator import RosettaCSVGenerator
+    from rosetta_csv_generator import RosettaCSVGenerator
 except ModuleNotFoundError:
     try:
-        from src.rosetta_csv.RosettaCSVGenerator import RosettaCSVGenerator
+        from src.rosetta_csv.rosetta_csv_generator import RosettaCSVGenerator
     except ModuleNotFoundError:
-        from rosetta_csv.RosettaCSVGenerator import RosettaCSVGenerator
+        from rosetta_csv.rosetta_csv_generator import RosettaCSVGenerator
 
 
 logger = logging.getLogger(__name__)
@@ -26,11 +26,6 @@ logging.basicConfig(
 
 # Default to UTC time.
 logging.Formatter.converter = time.gmtime
-
-
-def rosettacsvgeneration(droidcsv, rosettaschema, configfile):
-    csvgen = RosettaCSVGenerator(droidcsv, rosettaschema, configfile)
-    csvgen.export2rosettacsv()
 
 
 def main():
@@ -47,9 +42,14 @@ def main():
     parser.add_argument(
         "--cfg", help="config file for field mapping.", default=False, required=True
     )
-    global args
     args = parser.parse_args()
-    rosettacsvgeneration(args.csv, args.ros, args.cfg)
+    csvgen = RosettaCSVGenerator(
+        droidcsv=args.csv,
+        rosettaschema=args.ros,
+        configfile=args.cfg,
+    )
+    res = csvgen.export_to_rosetta_csv()
+    print(res)
 
 
 if __name__ == "__main__":
