@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "checkout"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: "fetch unshallow"
         run: git fetch --prune --unshallow
       - name: "list"
@@ -19,16 +19,23 @@ jobs:
         run: make package-source
       - name: "list"
         run: ls -la ./dist/
-      - name: "create release"
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "release"
+        uses: ncipollo/release-action@v1.14.0
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-      - name: Upload Release Assets
-        uses: alexellis/upload-assets@0.4.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          asset_paths: '["./dist/*"]'
+          artifacts: "dist/*"
+      # Via: https://github.com/actions/upload-release-asset/issues/60#issuecomment-755205520
+      #
+      # Create release, then upload using alexellis' action.
+      #- name: "create release"
+      #  uses: actions/create-release@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    tag_name: ${{ github.ref }}
+      #    release_name: ${{ github.ref }}
+      #- name: Upload Release Assets
+      #  uses: alexellis/upload-assets@0.4.1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    asset_paths: '["./dist/*"]'
