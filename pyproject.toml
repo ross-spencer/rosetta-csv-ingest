@@ -1,15 +1,7 @@
 [project]
-# For more information on package metadata see:
-#
-#   * https://packaging.python.org/specifications/core-metadata/
-#
-# For even greater information on this file, see the pypa/sampleproject:
-#
-#   * https://github.com/pypa/sampleproject/blob/fc8d83efd5749853507be959d858629d0aaf5c6e/pyproject.toml
-#
 
 name = "rosetta-csv"
-version = "0.0.0"
+dynamic = ["version"]
 requires-python = ">=3.9"
 
 dependencies = [
@@ -20,5 +12,7 @@ dependencies = [
 template = "src.rosetta_csv.rosetta_csv:main"
 
 [build-system]
-requires = ["setuptools>=69.5.1", "wheel"]
+requires = ["setuptools>=70.0.0", "wheel", "setuptools_scm[toml]>=8.1.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
