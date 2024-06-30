@@ -136,20 +136,19 @@ class RosettaCSVGenerator:
         SIPROW[0] = '"SIP",'
 
         # SIP Title...
+        SIPROW[1] = '"CSV Load",'
         if self.config.has_option("rosetta mapping", "SIP Title"):
-            SIPROW[1] = '"' + self.config.get("rosetta mapping", "SIP Title") + '",'
-        else:
-            SIPROW[1] = '"CSV Load",'
+            SIPROW[1] = f'"{self.config.get("rosetta mapping", "SIP Title")}",'
 
-        csvrows = csvrows + "".join(SIPROW).rstrip(",") + "\n"
+        csvrows = f'{csvrows}{"".join(SIPROW).rstrip(",")}\n'
 
         for sectionrows in csvlist:
             rowdata = ""
             for sectionrow in sectionrows:
                 for fielddata in sectionrow:
-                    rowdata = rowdata + fielddata + ","
-                rowdata = rowdata.rstrip(",") + "\n"
-            csvrows = csvrows + rowdata
+                    rowdata = f"{rowdata}{fielddata},"
+                rowdata = f'{rowdata.rstrip(",")}\n'
+            csvrows = f"{csvrows}{rowdata}"
 
         # this is the best i can think of because ExLibris have named two fields with the same
         # title in CSV which doesn't help us when we're trying to use unique names for populating rows
